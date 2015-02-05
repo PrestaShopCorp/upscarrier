@@ -54,7 +54,7 @@ class UpsCarrier extends CarrierModule
 	{
 		$this->name = 'upscarrier';
 		$this->tab = 'shipping_logistics';
-		$this->version = '1.3.4';
+		$this->version = '1.3.5';
 		$this->author = 'PrestaShop';
 		$this->limited_countries = array('us');
 		$this->module_key = 'b7e680a4290c977bb35e3b28817b8348';
@@ -1761,7 +1761,7 @@ class UpsCarrier extends CarrierModule
  			)
 		);
 		$context = stream_context_create($opts);
-		$result = @file_get_contents('https://www.ups.com/ups.app/xml/Rate', false, $context);
+		$result = @file_get_contents('https://onlinetools.ups.com/ups.app/xml/Rate', false, $context);
 		if (!$result)
 			$this->_webserviceError = $this->l('Could not connect to UPS.com');
 
