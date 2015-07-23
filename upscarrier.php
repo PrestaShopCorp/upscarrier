@@ -1735,7 +1735,12 @@ class UpsCarrier extends CarrierModule
 
 		// Return results
 		if (isset ($resultTab['RATINGSERVICESELECTIONRESPONSE']['RESPONSE']['RESPONSESTATUSDESCRIPTION']) && $resultTab['RATINGSERVICESELECTIONRESPONSE']['RESPONSE']['RESPONSESTATUSDESCRIPTION'] == 'Success')
-			return array('connect' => true, 'cost' => $resultTab['RATINGSERVICESELECTIONRESPONSE']['RATEDSHIPMENT']['TOTALCHARGES']['MONETARYVALUE'] * $conversionRate);
+		{
+			if (isset($resultTab['RATINGSERVICESELECTIONRESPONSE']['RATEDSHIPMENT']['NEGOTIATEDRATES']))
+				return array('connect' => true, 'cost' => $resultTab['RATINGSERVICESELECTIONRESPONSE']['RATEDSHIPMENT']['NEGOTIATEDRATES']['NETSUMMARYCHARGES']['GRANDTOTAL']['MONETARYVALUE'] * $conversionRate);
+			else
+				return array('connect' => true, 'cost' => $resultTab['RATINGSERVICESELECTIONRESPONSE']['RATEDSHIPMENT']['TOTALCHARGES']['MONETARYVALUE'] * $conversionRate);
+		}
 
 		if (isset($resultTab['RATINGSERVICESELECTIONRESPONSE']['RESPONSE']['ERROR']['ERRORDESCRIPTION']))
 			$this->_webserviceError = $resultTab['RATINGSERVICESELECTIONRESPONSE']['RESPONSE']['ERROR']['ERRORDESCRIPTION'];
@@ -1758,7 +1763,7 @@ class UpsCarrier extends CarrierModule
 				'content' => $xml,
 				'header'  => 'Content-type: application/x-www-form-urlencoded',
 				'timeout' => 5,
- 			)
+			)
 		);
 		$context = stream_context_create($opts);
 		$result = @file_get_contents('https://onlinetools.ups.com/ups.app/xml/Rate', false, $context);

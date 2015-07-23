@@ -18,6 +18,9 @@
 	</PickupType>
 	<Shipment>
 		<Description>Rate Shopping - Domestic</Description>
+		<RateInformation>
+			<NegotiatedRatesIndicator />
+		</RateInformation>
 		<Shipper>
 			<ShipperNumber>[[ShipperNumber]]</ShipperNumber>
 			<Address>
